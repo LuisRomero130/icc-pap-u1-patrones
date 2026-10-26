@@ -1,0 +1,3 @@
+# METODO FACTORY 
+- El patrón Factory Method consiste en crear clases concretas que comparten un comportamiento común a través de una interfaz o clase abstracta. Esto permite aplicar el polimorfismo, tratando a todos los objetos por igual desde el código cliente.
+El objetivo principal del patrón es encapsular y delegar la lógica de creación de objetos, evitando que el cliente dependa de las clases concretas. Además, las distintas fábricas siguen una misma interfaz o heredan de una abstracción común, lo que permite intercambiar la forma en que se instancian los objetos de manera flexible y desacoplada

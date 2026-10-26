@@ -1,9 +1,11 @@
 package icc.pap.u1.patrones.creacionales;
 
 public class FactoryDemo {
+    //1. Creamos una interfaz Notifiacion que define el metodo que tendran todas las clases que seran creadas
     public interface Notificacion {
         void enviar(String mensaje);
     }
+    //2. Creamos todas las clases que implementaran el metodo de la interfaz notificacion
 
     public static class NotificacionEmail implements Notificacion {
         @Override
@@ -25,6 +27,7 @@ public class FactoryDemo {
             System.out.println("Enviando notificación push: " + mensaje);
         }
     }
+    //3.Creamos la clase NotificacionFactory que tendra un metodo estatico que creara cada notificacion dependiendo del tipo
 
     public static class NotificacionFactory {
         public static Notificacion crearNotificacion(String tipo) {

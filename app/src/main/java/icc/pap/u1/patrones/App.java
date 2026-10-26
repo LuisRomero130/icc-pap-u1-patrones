@@ -3,8 +3,15 @@
  */
 package icc.pap.u1.patrones;
 
+import icc.pap.u1.patrones.builder.Pizza;
+import icc.pap.u1.patrones.builder.PizzaBuilder;
 import icc.pap.u1.patrones.creacionales.FactoryDemo.Notificacion;
 import icc.pap.u1.patrones.creacionales.FactoryDemo.NotificacionFactory;
+import icc.pap.u1.patrones.factoryMethod.Importador;
+import icc.pap.u1.patrones.factoryMethod.ImportadorPuntoComa;
+import java.util.List;
+import icc.pap.u1.patrones.factoryMethod.ImportadorTabulacion;
+import icc.pap.u1.patrones.prototype.PlantillaEmail;
 
 public class App {
     public String getGreeting() {
@@ -13,11 +20,38 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        runFactory();
+        //5. LLamamos al metodo
+        //runFactory();
+        //runFactory2();
+        //runPrototype();
+        runBuilder();
 
         
         
     }
+    private static void runBuilder() {
+
+       Pizza pizza= new PizzaBuilder().addIngredientes("salsa")
+       .addIngredientes("queso")
+       .addIngredientes("jamon")
+       .setTamanio("large")
+       .build();
+       System.out.println(pizza.descripcion());
+       Pizza pizza2= new PizzaBuilder().build();
+       System.out.println(pizza2.descripcion());
+    }
+
+    private static void runPrototype() {
+        PlantillaEmail email= new PlantillaEmail("No se ", "tampoco se");
+
+        PlantillaEmail emailSolicitudes = email.clone();
+        emailSolicitudes.cambiarAsunto("Solicitud");
+        System.out.println(email);
+        System.out.println(emailSolicitudes.contenido());
+        
+    }
+
+    //4. en App.java creamos el metodo runFactory que nos servirá para probar el funcioanmiento de la clase creada
     public static void runFactory(){
         System.out.println("------Ejecucion de runFactory-------");
         Notificacion email= NotificacionFactory.crearNotificacion("EMAIL");
@@ -26,11 +60,30 @@ public class App {
         sms.enviar("Hola, este es un mensaje de prueba para notificación por SMS.");
         Notificacion push= NotificacionFactory.crearNotificacion("PUSH");
         push.enviar("Hola, este es un mensaje de prueba para notificación push.");
-
+       
 
 
 
 
     }
+    public static void runFactory2(){
+        System.out.println("------Ejecucion de runFactory2-------");
+        Importador impPC= new ImportadorPuntoComa();
+        Importador impTab= new ImportadorTabulacion();
+        //IMplemtento el metodo crearLector() en ImportadorPuntoComa para que devuelva un LectorPuntoComa
+
+        System.out.println(impPC.importacion(List.of("S01;22.5;C","S02;18;C")));
+       
+        System.out.println(impTab.importacion(List.of("S01\t22.5\tC", "S02\t18\tC")));
+
+
+
+
+
+       
+
+    }
+
+        
 }
     
