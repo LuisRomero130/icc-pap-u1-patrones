@@ -12,7 +12,11 @@ import icc.pap.u1.patrones.factoryMethod.ImportadorPuntoComa;
 import java.util.List;
 import icc.pap.u1.patrones.factoryMethod.ImportadorTabulacion;
 import icc.pap.u1.patrones.prototype.PlantillaEmail;
-
+import icc.pap.u1.patrones.practica.configuracion.Configuracion;
+import icc.pap.u1.patrones.practica.creadores.CrearPedido;
+import icc.pap.u1.patrones.practica.creadores.CreadorEnLinea;
+import icc.pap.u1.patrones.practica.creadores.CreadorPresencial;
+import icc.pap.u1.patrones.practica.pedidos.Pedido;
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -24,7 +28,8 @@ public class App {
         //runFactory();
         //runFactory2();
         //runPrototype();
-        runBuilder();
+        //runBuilder();
+        runPractica();
 
         
         
@@ -83,6 +88,29 @@ public class App {
        
 
     }
+    private static void runPractica() {
+    System.out.println("------Ejecucion de runPractica-------");
+
+    // Singleton: las dos referencias apuntan a la misma instancia
+    Configuracion c1 = Configuracion.getGlobal();
+    Configuracion c2 = Configuracion.getGlobal();
+    System.out.println("Misma instancia: " + (c1 == c2));
+
+    // Factory Method: cada creador decide qué pedido construir
+    CrearPedido creadorLinea = new CreadorEnLinea();
+    CrearPedido creadorPresencial = new CreadorPresencial();
+
+    Pedido p1 = creadorLinea.crearPedido("P001", "Ana", 100.0);
+    Pedido p2 = creadorPresencial.crearPedido("P002", "Luis", 50.0);
+
+    p1.procesar();
+    p2.procesar();
+
+    // Cambiar el impuesto en el Singleton afecta a todos los pedidos
+    System.out.println("--- Cambio de impuesto a 12% ---");
+    Configuracion.getGlobal().setImpuestos(12.0);
+    p1.procesar();
+}
 
         
 }
